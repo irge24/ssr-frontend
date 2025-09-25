@@ -11,4 +11,4 @@ jobs:
       with:
         username: 'irge24'
         reponame: 'ssr-frontend'
-        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+        token: ${{ secrets.GITHUB_TOKEN }} # Do not change this line
