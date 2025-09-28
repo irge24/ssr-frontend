@@ -2,15 +2,29 @@
   <div>
     <h2>Create a new document</h2>
     <form @submit.prevent="createDoc">
-      <label>Title</label>
-      <input v-model="title" required />
+      <label for="title">Title</label>
+      <input
+        id="title"
+        v-model="title"
+        required
+      >
 
-      <label>Contents</label>
-      <textarea v-model="content" required></textarea>
+      <label for="content">Contents</label>
+      <textarea
+        id="content"
+        v-model="content"
+        required
+      />
 
       <div class="button-group">
-        <button type="submit">Create</button>
-        <router-link to="/"><button type="button">Back</button></router-link>
+        <button type="submit">
+          Create
+        </button>
+        <router-link to="/">
+          <button type="button">
+            Back
+          </button>
+        </router-link>
       </div>
     </form>
   </div>
