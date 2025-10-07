@@ -2,8 +2,13 @@
   <div class="home">
     <h1>All documents</h1>
     <ul>
-      <li v-for="doc in docs" :key="doc._id">
-        <router-link :to="`/doc/${doc._id}`">{{ doc.title }}</router-link>
+      <li
+        v-for="doc in docs"
+        :key="doc._id"
+      >
+        <router-link :to="`/doc/${doc._id}`">
+          {{ doc.title }}
+        </router-link>
       </li>
     </ul>
 
