@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "axios": "^1.12.2",
+    "codemirror": "^5.65.20",
+    "codemirror-editor-vue3": "^2.8.0",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1"
   },
