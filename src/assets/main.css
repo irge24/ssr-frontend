@@ -107,3 +107,112 @@ select {
   box-sizing: border-box;
   font-size: 1.2rem;
 }
+
+.form {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px 40px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.form h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.form input {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  text-align: left;
+}
+
+.form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #42b983;
+  color: white;
+  font-size: 1.7rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.form button:hover {
+  background-color: #369870;
+}
+
+.switch-link {
+  color: #42b983;
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.switch-link:hover {
+  font-size: 1.8rem;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  font-size: 1.4rem;
+}
+
+.message {
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+}
+
+.message-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.share-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.share-section input {
+  margin-right: 0.5rem;
+  padding: 0.4rem;
+}
+
+.share-section {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.share-section input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
