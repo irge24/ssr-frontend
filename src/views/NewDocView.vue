@@ -1,6 +1,9 @@
 <template>
   <div>
+    <div v-if="message" class="message">{{ message }}</div>
     <h2>Create a new document</h2>
+
+    <!-- Form for create a new document -->
     <form @submit.prevent="createDoc">
       <label for="title">Title</label>
       <input
@@ -10,6 +13,7 @@
       >
 
       <label for="type">Type</label>
+      <!-- Choose between text or code document -->
       <select id="type" v-model="type">
         <option value="text">Text</option>
         <option value="code">Code</option>
@@ -26,7 +30,7 @@
           style="height: 500px; border: 1px solid #ccc; border-radius: 10px; font-size: 35px;"
         />
 
-        <!-- Run code -->
+        <!-- Run code button -->
         <label>Code output:</label>
         <pre>{{ output }}</pre>
 
@@ -73,6 +77,7 @@ export default {
       content: "",
       type: "text", // Determines if the document is plain text or code
       output: "", // stores the output after running code
+      message: "",
       /* Configuration options for CodeMirror editor */
       cmOptions: { 
         mode: "javascript",
@@ -84,33 +89,47 @@ export default {
   },
 
 methods: {
-    /**
-     * Triggered when CodeMirror content changes.
-     * Updates the components 'content' variable in real time.
-     */
+    // Runs when user types in CodeMirror
     onEditorChange(value) {
       this.content = value;
     },
 
-    /* Creates a new document via the API. */
+    // Creates a new document using the API
     async createDoc() {
-      await api.post("/", {
-        title: this.title,
-        content: this.content,
-        type: this.type,
-      });
-      alert("Document created!");
-      this.$router.push("/");
+      try {
+        const token = localStorage.getItem("token");         // Check if user is logged in
+        const endpoint = token ? "/posts" : "/posts/public"; // guests go to /posts/public
+
+        const payload = {
+          title: this.title,
+          content: this.content,
+          type: this.type,
+        };
+
+        await api.post(endpoint, payload); // Send data to backend
+
+        this.message = "✅ Document successfully created! Redirecting...";
+
+        // Wait 3 seconds, then redirect
+        setTimeout(() => {
+          this.message = "";
+          this.$router.push("/"); // redirect after showing message
+        }, 3000);
+
+      } catch (err) {
+        this.message = "❌ Could not create document. Please try again.";
+        setTimeout(() => this.message = "", 3000);
+      }
     },
 
-    /* Runs the JavaScript code typed into the CodeMirror editor. */
+    // Runs the JavaScript code typed into the CodeMirror editor
     async runCode() {
       const code = this.content?.trim();
       if (!code) {
         this.output = "Code is empty!";
         return;
       }
-      /* POST request */
+
       const res = await fetch("https://execjs.emilfolino.se/code", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -118,12 +137,12 @@ methods: {
       });
       const data = await res.json();
 
-      /* Decode the Base64 response and display the output. */
+      // Decode the Base64 response and display the output
       const decoded = atob(data.data);
 
-      /* Display output or error message if there's and error. */
+      // Display output or error message if there's an error
       if (decoded.toLowerCase().includes("error")) {
-        this.output = "⚠️ There was an error in your code. Please check your syntax.";
+        this.output = "⚠️ There was an error in your code. Please try again.";
       } else {
         this.output = decoded;
       }
