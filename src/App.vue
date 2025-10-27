@@ -1,17 +1,19 @@
 <script setup>
+import TextEditor from './components/TextEditor.vue'
 </script>
 
 <template>
   <div id="app">
     <header>
       <nav>
-        <router-link to="/">
-          Home
-        </router-link>
+        <router-link to="/">Home</router-link>
       </nav>
     </header>
 
     <main>
+      <h1>Testa TextEditor</h1>
+      <TextEditor/>
+
       <router-view />
     </main>
   </div>
