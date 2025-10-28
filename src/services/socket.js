@@ -1,12 +1,13 @@
 // SOCKETS - KMOM03
 // Frontend
 
+/*
+
 // npm i --save socket.io-client
 
 import { io } from "socket.io-client";
 
 const SERVER_URL = "http://localhost:8337"; // tidigare 3001
-//const socket = io("http://localhost:8337"); // backend-port
 
 // Skapa socket-anslutning direkt
 export const socket = io(SERVER_URL);
@@ -25,3 +26,5 @@ let data = {
 };
 
 socket.emit("doc", data);
+
+*/
