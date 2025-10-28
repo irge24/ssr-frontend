@@ -27,13 +27,10 @@
       </div>
 
       <!-- Plain textarea for text type -->
-      <textarea
-        v-else
-        id="content"
-        v-model="content"
-        required
-        rows="10"
-      ></textarea>
+      <div v-else>
+        <h2>TextEditor</h2>
+        <TextEditor v-model="content" />
+      </div>
 
       <div class="button-group">
         <button type="submit">Update</button>
@@ -70,6 +67,7 @@
 
 <script>
 import Codemirror from "codemirror-editor-vue3";
+import TextEditor from '../components/TextEditor.vue'
 import "codemirror/lib/codemirror.css";
 import "codemirror/mode/javascript/javascript.js";
 import "codemirror/theme/midnight.css";
@@ -78,7 +76,7 @@ import api from "../services/api";
 
 export default {
   name: "DocView",
-  components: { Codemirror },
+  components: { Codemirror, TextEditor },
 
   data() {
     return {
