@@ -6,29 +6,10 @@
 import { io } from "socket.io-client";
 
 const SERVER_URL = "http://localhost:8337"; // tidigare 3001
-
 //const socket = io("http://localhost:8337"); // backend-port
 
 // Skapa socket-anslutning direkt
 export const socket = io(SERVER_URL);
-
-// Använda anslutningen i html kod
-/*
-<script>
-import { socket } from "@/services/socket";
-
-export default {
-  mounted() {
-    socket.on("connect", () => {
-      console.log("Ansluten till servern!");
-    });
-  },
-  beforeUnmount() {
-    socket.disconnect();
-  },
-};
-</script>
-*/
 
 // Rooms
 

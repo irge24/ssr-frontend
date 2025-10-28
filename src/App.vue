@@ -11,7 +11,7 @@ import TextEditor from './components/TextEditor.vue'
     </header>
 
     <main>
-      <h1>Testa TextEditor</h1>
+      <h2>TextEditor</h2>
       <TextEditor/>
 
       <router-view />
