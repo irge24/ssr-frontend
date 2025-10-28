@@ -1,15 +1,15 @@
 <template>
   <div>
-    <label>Titel</label>
-    <input v-model="title" />
+    <label for="title-field">Titel</label>
+    <input v-model="title">
 
-    <label>Innehåll</label>
+    <label for="content-field">Innehåll</label>
     <textarea
       :value="content"
       @input="handleContentChange"
     ></textarea>
 
-    <button @click="clear">Rensa</button>
+    <button id="print-message" @click="clear">Rensa</button>
 
     <div id="output-container">
       <h1>{{ title }}</h1>
@@ -19,50 +19,42 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue"
-import { io } from "socket.io-client"
+import { ref, onMounted, onUnmounted } from "vue";
+import { io } from "socket.io-client";
 
-const SERVER_URL = "http://localhost:1337"
-const docId = "demo-doc" // Här kan du byta mot MongoDB _id
+const SERVER_URL = "http://localhost:1337";
 
-const title = ref("")
-const content = ref("")
-let socket = null
-let updatingFromSocket = false
+const title = ref("");
+const content = ref("");
+
+let socket = null;
 
 onMounted(() => {
-  socket = io(SERVER_URL)
+  socket = io(SERVER_URL);
 
-  // Join document room
-  socket.emit("create", docId)
-
-  // Lyssna på uppdateringar från andra
-  socket.on("doc", (data) => {
-    updatingFromSocket = true
-    content.value = data.content
-    title.value = data.title
-    updatingFromSocket = false
-  })
-})
+  socket.on("content", (data) => {
+    content.value = data;
+  });
+});
 
 onUnmounted(() => {
-  if (socket) socket.disconnect()
-})
+  if (socket) socket.disconnect();
+});
 
-function handleContentChange(e) {
-  if (updatingFromSocket) return
-  const value = e.target.value
-  content.value = value
-
-  // Skicka uppdatering med docId
-  socket.emit("doc", { _id: docId, content: content.value, title: title.value })
+function setTitle(value) {
+  title.value = value;
 }
 
 function clear(e) {
-  e.preventDefault()
-  title.value = ""
-  content.value = ""
-  socket.emit("doc", { _id: docId, content: "", title: "" })
+  e.preventDefault();
+  title.value = "";
+  content.value = "";
+}
+
+function handleContentChange(e) {
+  const value = e.target.value;
+  content.value = value;
+  if (socket) socket.emit("content", value);
 }
 </script>
 
