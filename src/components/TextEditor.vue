@@ -22,7 +22,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { io } from "socket.io-client";
 
-const SERVER_URL = "http://localhost:1337";
+const SERVER_URL = "http://localhost:3000";
 
 const title = ref("");
 const content = ref("");
