@@ -1,4 +1,5 @@
 <script setup>
+import TextEditor from './components/TextEditor.vue'
 </script>
 
 <template>
@@ -15,6 +16,9 @@
     </header>
 
     <main>
+      <h2>TextEditor</h2>
+      <TextEditor/>
+
       <router-view />
     </main>
   </div>
