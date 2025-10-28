@@ -19,6 +19,7 @@
     "axios": "^1.12.2",
     "codemirror": "^5.65.20",
     "codemirror-editor-vue3": "^2.8.0",
+    "socket.io-client": "^4.8.1",
     "vue": "^3.5.18",
     "vue-router": "^4.5.1",
     "vue-socket.io": "^3.0.10"
