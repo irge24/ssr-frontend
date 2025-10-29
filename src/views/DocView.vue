@@ -72,6 +72,11 @@ import "codemirror/mode/javascript/javascript.js";
 import "codemirror/theme/midnight.css";
 import { getUserEmail } from "@/services/auth.mjs";
 import api from "../services/api";
+import { onMounted, onUnmounted } from "vue";
+import { io } from "socket.io-client";
+
+const SERVER_URL = "http://localhost:3000";
+let socket = null;
 
 export default {
   name: "DocView",
@@ -106,6 +111,15 @@ export default {
 
   async mounted() {
     await this.fetchDoc();
+
+    socket = io(SERVER_URL);
+    socket.on("content", (data) => {
+      this.content = data;
+    });
+  },
+
+  beforeUnmount() {
+    if (socket) socket.disconnect();
   },
 
   methods: {
@@ -178,6 +192,7 @@ export default {
     // Handle input from CodeMirror
     onEditorChange(value) {
       this.content = value;
+      if (socket) socket.emit("content", value);
     },
 
     // Run JavaScript code using external API
