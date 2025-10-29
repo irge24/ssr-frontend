@@ -28,7 +28,7 @@
 
       <!-- Plain textarea for text type -->
       <div v-else>
-        <TextEditor v-model="content" />
+        <TextEditor v-model="content" :doc-id="doc._id" />
       </div>
 
       <div class="button-group">
@@ -114,10 +114,15 @@ export default {
 
     // Create socket and listen to content
     socket = io(SERVER_URL);
-    socket.on("content", (data) => {
-      this.content = data;
+
+    if (this.doc && this.doc._id) {
+      socket.emit("join", this.doc._id);
+
+      socket.on(`content:${this.doc._id}`, (data) => {
+        this.content = data;
     });
-  },
+  }
+},
 
   // Disconnect socket
   beforeUnmount() {
@@ -196,7 +201,9 @@ export default {
       this.content = value;
 
       // Send updated content to server, sync between documents
-      if (socket) socket.emit("content", value);
+      if (socket && this.doc?._id) {
+        socket.emit(`content:${this.doc._id}`, value);
+      }
     },
 
     // Run JavaScript code using external API

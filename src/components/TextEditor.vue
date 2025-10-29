@@ -18,7 +18,7 @@ import { onMounted, onUnmounted } from "vue"; // livscykelmetoder i Vue
 import { io } from "socket.io-client"; // klientens anslutning
 
 // Props & emits för v-model
-const props = defineProps({ modelValue: String }); // content som skickas in
+const props = defineProps({ modelValue: String, docId: String, }); // content som skickas in
 const emit = defineEmits(["update:modelValue"]); // uppdatera content
 
 const SERVER_URL = "http://localhost:3000";
@@ -29,7 +29,11 @@ let socket = null;
 onMounted(() => {
   socket = io(SERVER_URL);
 
-  socket.on("content", (data) => {
+  if (props.docId) {
+    socket.emit("join",props.docId);
+  }
+
+  socket.on(`content:${props.docId}`, (data) => {
     emit("update:modelValue", data);
   });
 });
@@ -43,14 +47,14 @@ onUnmounted(() => {
 function clear(e) {
   e.preventDefault();
   emit("update:modelValue", "");
-  if (socket) socket.emit("content", "");
+  if (socket) socket.emit(`content:${props.docId}`, "");
 }
 
 // uppdatera content som en användare skriver, synkas
 function handleContentChange(e) {
   const value = e.target.value;
   emit("update:modelValue", value);
-  if (socket) socket.emit("content", value);
+  if (socket) socket.emit(`content:${props.docId}`, value);
 }
 </script>
 
