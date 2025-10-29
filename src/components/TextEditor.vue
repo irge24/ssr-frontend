@@ -54,7 +54,7 @@ textarea {
   width: 100%;
   height: 150px;
   padding: 8px;
-  font-size: 14px;
+  font-size: 24px;
   box-sizing: border-box;
 }
 </style>

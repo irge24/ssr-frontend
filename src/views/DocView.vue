@@ -28,7 +28,6 @@
 
       <!-- Plain textarea for text type -->
       <div v-else>
-        <h2>TextEditor</h2>
         <TextEditor v-model="content" />
       </div>
 
