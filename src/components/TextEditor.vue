@@ -1,6 +1,5 @@
 <template>
   <div>
-    <label for="content-field">Innehåll</label>
     <textarea
       :value="modelValue"
       @input="handleContentChange"
