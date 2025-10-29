@@ -112,12 +112,14 @@ export default {
   async mounted() {
     await this.fetchDoc();
 
+    // Create socket and listen to content
     socket = io(SERVER_URL);
     socket.on("content", (data) => {
       this.content = data;
     });
   },
 
+  // Disconnect socket
   beforeUnmount() {
     if (socket) socket.disconnect();
   },
@@ -192,6 +194,8 @@ export default {
     // Handle input from CodeMirror
     onEditorChange(value) {
       this.content = value;
+
+      // Send updated content to server, sync between documents
       if (socket) socket.emit("content", value);
     },
 

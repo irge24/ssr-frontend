@@ -15,16 +15,18 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from "vue";
-import { io } from "socket.io-client";
+import { onMounted, onUnmounted } from "vue"; // livscykelmetoder i Vue
+import { io } from "socket.io-client"; // klientens anslutning
 
 // Props & emits för v-model
-const props = defineProps({ modelValue: String });
-const emit = defineEmits(["update:modelValue"]);
+const props = defineProps({ modelValue: String }); // content som skickas in
+const emit = defineEmits(["update:modelValue"]); // uppdatera content
 
 const SERVER_URL = "http://localhost:3000";
 let socket = null;
 
+
+// ansluta till servern, alla klienter får synkat content
 onMounted(() => {
   socket = io(SERVER_URL);
 
@@ -33,15 +35,19 @@ onMounted(() => {
   });
 });
 
+// koppla från
 onUnmounted(() => {
   if (socket) socket.disconnect();
 });
 
+// trycka "rensa", synkas
 function clear(e) {
   e.preventDefault();
   emit("update:modelValue", "");
+  if (socket) socket.emit("content", "");
 }
 
+// uppdatera content som en användare skriver, synkas
 function handleContentChange(e) {
   const value = e.target.value;
   emit("update:modelValue", value);
@@ -49,6 +55,7 @@ function handleContentChange(e) {
 }
 </script>
 
+// CSS
 <style scoped>
 textarea {
   width: 100%;
